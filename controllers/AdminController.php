@@ -45,6 +45,7 @@ class AdminController extends Controller
         $categories = new Category();
         if ($categories->load(Yii::$app->request->post()))
         {
+            $categories->type = $this->type;
             $parent = Category::findOne($categories->parent_id);
             if (!empty($parent))
                 $categories->indent = $parent->indent + 1;
@@ -82,6 +83,7 @@ class AdminController extends Controller
 
         if ($model->load(Yii::$app->request->post()))
         {
+            $model->type = $this->type;
             $parent = Category::findOne($model->parent_id);
             if (!empty($parent))
                 $model->indent = $parent->indent + 1;
@@ -156,7 +158,7 @@ class AdminController extends Controller
 
     protected function categories(&$data = [], $parent = NULL)
     {
-        $category = Category::find()->where(['parent_id' => $parent, 'type' => 'post'])->all();
+        $category = Category::find()->where(['parent_id' => $parent, 'type' => $this->type])->orderBy(['type' => SORT_DESC])->all();
         foreach ($category as $key => $value)
         {
             $data[] = $value;

@@ -69,20 +69,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     GridView::widget([
                         'dataProvider' => $dataProvider,
                         'summary' => "<p>Hiển thị {begin} đến {end} trong tổng số {count} mục</p>",
-                         'layout' => "{pager}\n{items}\n{summary}\n{pager}",
+                        'layout' => "{pager}\n{items}\n{summary}\n{pager}",
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
                             [
                                 'attribute' => 'title',
-                                'value' => function($data) {
+                                'value' => function($data)
+                                {
                                     return $data->getIndent($data->indent) . $data->title;
                                 }
                             ],
+                            'type',
                             'description:ntext',
                             [
                                 'attribute' => 'publish',
                                 'format' => 'raw',
-                                'value' => function($data) {
+                                'value' => function($data)
+                                {
                                     if ($data['publish'] == Category::PUBLISH_ACTIVE)
                                         $check = 'checked';
                                     else
